@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    body {
+        background: #000;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.8);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        animation: fadeIn 0.8s ease-in-out;
+        text-align: center;
+    }
+    .rating-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    .rating-container input {
+        display: none;
+    }
+    .rating-container label {
+        font-size: 30px;
+        cursor: pointer;
+        transition: transform 0.3s, color 0.3s;
+    }
+    .rating-container input:checked + label,
+    .rating-container label:hover,
+    .rating-container label:hover ~ label {
+        color: gold;
+        transform: scale(1.2);
+    }
+    button {
+        background: gold;
+        color: black;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: transform 0.3s;
+    }
+    button:hover {
+        transform: scale(1.1);
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="container">
+    <h2>Add a Review for {{ movie.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="child">
+            <label><strong>Rate the Movie:</strong></label>
+            <div class="rating-container">
+                {% for i in rating_range %}
+                    <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}">
+                    <label for="star{{ i }}">⭐{{ i }}</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Review Text -->
+        <div>
+            <label><strong>Your Review:</strong></label>
+            <div class ='review-textarea'>
+                <textarea name="review_text" rows="4" cols="50" placeholder="Write your review here..." required></textarea>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% endblock %}

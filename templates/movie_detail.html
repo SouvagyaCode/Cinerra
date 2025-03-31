@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 bg-dark text-light rounded-4">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ movie.image.url }}" class="img-fluid rounded-3 shadow-lg" alt="{{ movie.title }}">
+            </div>
+
+            <div class="col-md-8">
+                <h2 class="display-5 fw-bold text-warning">{{ movie.title }}</h2>
+                <h3 class="text-light">⭐{{ avg_rating}}/10</h3>
+                <p class="lead">{{ movie.description }}</p>
+                {% if user.is_authenticated %}
+
+                    {% if user_review %}
+                        <a href="{% url 'add_review' movie.id %}" class="btn btn-warning btn-lg animate__animated animate__pulse animate__infinite">Update Review</a>
+                    {% else %}
+                        <a href="{% url 'add_review' movie.id %}" class="btn btn-primary btn-lg animate__animated animate__pulse animate__infinite">Add Review</a>
+                    {% endif %}
+                {% else %}
+                    <p><a href="{% url 'login' %}" class="btn btn-outline-light">Login</a> to add a review.</p>
+                {% endif %}
+
+                {% if in_wishlist %}
+                <a href="{% url 'add_to_wishlist' movie.id %}" class="btn btn-danger btn-lg">Delete to Wishlist</a>
+                {% else %}
+                <a href="{% url 'add_to_wishlist' movie.id %}" class="btn btn-success btn-lg">Add from Wishlist</a>
+                {% endif %}
+            </div>
+
+        </div>
+        {% if user.is_authenticated %}
+        <div class="mt-4">
+        <h3 class="text-warning">Leave a Comment</h3>
+        <form method="post" action="{% url 'add_comment' movie.id %}" class="mb-4">
+            {% csrf_token %}
+            <textarea name="comment_text" class="form-control bg-dark text-light border-warning rounded-3 p-2" 
+                      rows="3" placeholder="Write a comment..." required></textarea>
+            <button type="submit" class="btn btn-warning mt-2">Add Comment</button>
+        </form>
+    </div>
+{% else %}
+    <p class="text-muted">You must <a href="{% url 'login' %}" class="text-warning">log in</a> to comment.</p>
+{% endif %}
+    <div class="col-md-4">
+        <h3 class="text-light border-bottom pb-2">Comments</h3>
+        {% if comments %}
+            <div class="comment-container">
+                {% for comment in comments %}
+                    <div class="comment-card animate__animated animate__fadeInUp">
+                        <div class="d-flex mb-2">
+                            <span class="comment-avatar">{{ comment.user.username }}</span>
+                            <h5 class="mb-0 text-warning ms-2">{{ comment.user.username }}</h5>
+                        </div>
+                        <p class="text-light m-0">{{ comment.comment_text }}</p>
+                        <small class="text-light m-0">Posted on: {{ comment.created_at }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        {% endif %}
+
+</div>
+    </div>
+    <div class="mt-5">
+        <h3 class="border-bottom pb-2 text-light">Reviews</h3>
+        <div class="review-container">
+            {% for review in reviews %}
+                <div class="review-card animate__animated animate__fadeInUp">
+                    <h5 class="text-warning"><strong>{{ review.user.username }}</strong></h5>
+                    <p class="text-light m-0">{{ review.review_text }}</p>
+                    <small class="text-white">
+                        {% for _ in "x"|rjust:review.rating %}⭐{% endfor %}
+                        ({{ review.rating }}/10)
+                    </small>
+                </div>
+            {% empty %}
+                <p class="text-muted">No reviews yet. Be the first to review!</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .review-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .review-card {
+        background: rgba(0, 0, 0, 0.8);
+        border-left: 5px solid #f8d210;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        transform: scale(1);
+        transition: transform 0.3s ease;
+    }
+    .review-card:hover {
+        transform: scale(1.05);
+    }
+    .comment-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .comment-card {
+        background: rgba(0, 0, 0, 0.85);
+        border-left: 5px solid #f8d210;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+    .comment-card:hover {
+        transform: scale(1.02);
+    }
+    .comment-avatar {
+        width: 40px;
+        height: 40px;
+        background: #f8d210;
+        color: #000;
+        font-weight: bold;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+    textarea.form-control {
+        resize: none;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+{% endblock %}

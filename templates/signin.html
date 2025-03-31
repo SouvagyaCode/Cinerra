@@ -1,0 +1,28 @@
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Login Here</h3>
+
+        <label for="username">Username</label>
+        <input type="text" placeholder="Email or Phone" name= "username" id="username">
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" name="password" id="password">
+
+        <button>Log In</button>
+        <div class="social">
+          <div class="go"><i class="fab fa-google"></i>  Google</div>
+          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+        </div>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+    </form>
+{% endblock %}

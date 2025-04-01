@@ -53,8 +53,10 @@
                         <div class="d-flex mb-2">
                             <span class="comment-avatar">{{ comment.user.username }}</span>
                             <h5 class="mb-0 text-warning ms-2">{{ comment.user.username }}</h5>
+
                         </div>
                         <p class="text-light m-0">{{ comment.comment_text }}</p>
+                        <h5 class="text-light m-0">{{ comment.sentiment }}</h5>
                         <small class="text-light m-0">Posted on: {{ comment.created_at }}</small>
                     </div>
                 {% endfor %}

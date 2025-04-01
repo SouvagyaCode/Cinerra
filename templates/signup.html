@@ -1,39 +1,177 @@
 
-{% extends "base.html" %}
 {% load static %}
 {% block content %}
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow-lg p-4 bg-dark text-white" style="width: 400px; border-radius: 10px;">
-        <h2 class="text-center mb-1">Sign up</h2>
-        <p class="text-center text-muted">Sign up to continue</p>
-        <form method="post" class="mt-3">
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+body{
+	margin: 0;
+	padding: 0;
+	background: #fff;
+
+	color: #fff;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+.body{
+	position: fixed;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	background-image: url(https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW92aWUlMjBwb3N0ZXJ8ZW58MHx8MHx8fDA%3D);
+	background-size: cover;
+    filter: blur(7px);
+	z-index: 0;
+}
+
+.grad{
+	position: absolute;
+	top: -20px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+.header{
+	position: fixed;
+	top: calc(50% - 35px);
+	left: calc(50% - 255px);
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 35px;
+	font-weight: 200;
+}
+
+.header div span{
+	color: #5379fa !important;
+}
+
+.login{
+	position: fixed;
+	top: calc(50% - 75px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+.login input[type=text]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+.login a{
+    width: 300px;
+    height: 30px;
+    background: transparent;
+    color: #fff;
+    font-family: 'Exo', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 4px;
+    margin-top: 10px; 
+    display: inline-block;
+
+
+}
+.login input[type=password]{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 2px;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+	margin-top: 10px;
+}
+
+.login button{
+	width: 250px;
+	height: 35px;
+	background: #fff;
+	border: 1px solid #fff;
+	cursor: pointer;
+	border-radius: 10px;
+	color: grey;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 6px;
+	margin-top: 10px;
+
+}
+
+.login button :hover{
+	opacity: 0.8;
+}
+
+.login button :active{
+	opacity: 0.6;
+}
+
+.login input[type=text]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+	outline: none;
+	border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login button :focus{
+	outline: none;
+}
+
+::-webkit-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+   color: rgba(255,255,255,0.6);
+}
+</style>
+<div class="body"></div>
+		<div class="grad"></div>
+		<div class="header">
+			<div>Movie<span>Review</span></div>
+		</div>
+		<br>
+        <form method = "post">
             {% csrf_token %}
-            <div class="form-group mb-3">
-                {{ form.username.label_tag }}
-                {{ form.username}}
+            <div class="login">
+            
+				<input type="text" placeholder="username" name="username"><br>
+				<input type="password" placeholder="password" name="password1"><br>
+                <input type="password" placeholder="confirm password" name="password2"><br>
+				<button type="submit">Login</button><br>
+                <a href="{% url 'signin' %}">Already have an account? Login here</a><br>
             </div>
-            <div class="form-group mb-3">
-                {{ form.password1.label_tag }}
-                {{ form.password1 }}
-            </div>
-            <div class="form-group mb-3">
-                {{ form.password2.label_tag }}
-                {{ form.password2 }}
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Sign up</button>
-            <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Remember me</label>
-            </div>
+		</div>
         </form>
-        <hr>
-        <p class="text-center text-muted">ACCESS QUICKLY</p>
-        <div class="d-flex justify-content-center gap-2">
-            <button class="btn btn-outline-primary">Google</button>
-            <button class="btn btn-outline-primary">LinkedIn</button>
-            <button class="btn btn-outline-primary">SSO</button>
-        </div>
-        <p class="text-center mt-3">Already have an account? <a href="{% url 'signin' %}">Sign in</a></p>
-    </div>
-</div>
+
 {% endblock %}

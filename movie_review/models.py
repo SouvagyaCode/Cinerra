@@ -26,6 +26,7 @@ class Comment(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='comments')
     comment_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    sentiment = models.CharField(max_length=20, blank=True, null=True)
 
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='reviews')
@@ -33,6 +34,7 @@ class Review(models.Model):
     review_text = models.TextField()
     rating = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return f"{self.user.username} - {self.movie.title}"

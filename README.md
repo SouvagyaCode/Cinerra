@@ -1,6 +1,6 @@
 # Movie Review Website
 
-An IMDb-style movie review platform built with Django and Bootstrap.
+A movie review platform built with Django and Bootstrap.
 ## Screenshots
 ### Homepage
 ![Homepage](homepage.png)

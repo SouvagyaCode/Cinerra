@@ -14,7 +14,7 @@ A movie review platform built with Django and Bootstrap.
 - Wishlist functionality
 - Review and rating system for movies
 - Admin panel for managing movies and reviews
-- sentiment analysis of comments
+- sentiment analysis for reviews
 - Search functionality for movies
 
 ## Installation

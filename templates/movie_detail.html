@@ -13,6 +13,7 @@
             <div class="col-md-8">
                 <h2 class="display-5 fw-bold text-warning">{{ movie.title }}</h2>
                 <h3 class="text-light">⭐{{ avg_rating}}/10</h3>
+                <h3 class="text-light">{{ sentiment_label }}</h3>
                 <p class="lead">{{ movie.description }}</p>
                 {% if user.is_authenticated %}
 
@@ -61,7 +62,6 @@
                             <h5 class="mb-0 text-warning ms-2">{{ comment.user.username }}</h5>
                         </div>
                         <p class="text-light m-0">{{ comment.comment_text }}</p>
-                        <h5 class="text-light m-0">{{ comment.sentiment|default:"Not Analyzed" }}</h5>
 
                         <small class="text-light m-0">Posted on: {{ comment.created_at }}</small>
                     </div>

@@ -28,7 +28,7 @@ Ensure you have the following installed:
 ### Steps
 1. Clone the repository:
    ```sh
-   git clone https://github.com/SouvagyaCode/Movie-Review.git
+   git clone https://github.com/SouvagyaCode/MovieReview.git
    cd movie-review-site
    ```
 2. Create and activate a virtual environment (optional but recommended):

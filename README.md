@@ -1,6 +1,12 @@
 # Movie Review Website
 
 An IMDb-style movie review platform built with Django and Bootstrap.
+## Screenshots
+### Homepage
+![Homepage](homepage.png)
+
+### Movie Detail Page
+![Movie Detail](movie_detail.png)
 
 ## Features
 - User authentication (Signup/Login/Logout)
@@ -45,12 +51,7 @@ Ensure you have the following installed:
    ```
 7. Open your browser and visit `http://127.0.0.1:8000/` to access the website.
 
-## Screenshots
-### Homepage
-![Homepage](homepage.png)
 
-### Movie Detail Page
-![Movie Detail](movie_detail.png)
 
 ## License
 This project is licensed under the MIT License.

@@ -12,7 +12,10 @@ A movie review platform built with Django and Bootstrap.
 - User authentication (Signup/Login/Logout)
 - Movie listing with descriptions and images
 - Wishlist functionality
-- Responsive UI similar to IMDb
+- Review and rating system for movies
+- Admin panel for managing movies and reviews
+- sentiment analysis of comments
+- Search functionality for movies
 
 ## Installation
 

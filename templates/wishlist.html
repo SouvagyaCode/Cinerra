@@ -2,18 +2,22 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-warning">My Wishlist</h2>
-    <ul class="list-group">
+    <h1 class="text-center my-4">Wishlists</h1>
         {% if wishlists %}
+    <div class="row">
         {% for wishlist in wishlists %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span class="text-red-200">{{ wishlist.movie.title }} 
-                    <p><b>Description:</b>{{wishlist.movie.description}}</p>
-                </span>
-            </li>
+        <div class="col-md-4 col-lg-3">
+            <div class="card bg-dark text-white movie-card">
+                <img src="{{ wishlist.movie.image.url }}" class="card-img-top" alt="{{ wishlist.movie.title }}">
+                <div class="card-body card-overlay">
+                    <h5 class="card-title">{{ wishlist.movie.title }}</h5>
+                </div>
+            </div>
+        </div>
         {% empty %}
             <li class="list-group-item">Your wishlist is empty.</li>
         {% endfor %}
+    </div>
         {% endif %}
     </ul>
 </div>

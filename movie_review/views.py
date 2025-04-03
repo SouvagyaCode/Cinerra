@@ -7,9 +7,23 @@ from django.db.models import Avg
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from .utils import analyze_sentiment
+
+from django.db.models import Q 
+
 def home(request):
+    query = request.GET.get('query', '')
     movies = Movie.objects.all()
-    return render(request, 'base.html', {'movies': movies})
+    
+    if query:
+        movies = movies.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) 
+        ).distinct()
+
+    return render(request, 'base.html', {
+        'movies': movies,
+        'search_query': query
+    })
 
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie,id = movie_id)

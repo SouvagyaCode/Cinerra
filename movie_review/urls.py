@@ -8,4 +8,5 @@ urlpatterns = [
     path('movie/<int:movie_id>/comment/', add_comment, name='add_comment'),
     path('wishlist/',wishlist,name='wishlist'),
     path('', home, name='home'),
+    path('search/', home, name='search'),
 ]

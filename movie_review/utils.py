@@ -1,26 +1,22 @@
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-
-# Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained("nlptown/bert-base-multilingual-uncased-sentiment")
-model = AutoModelForSequenceClassification.from_pretrained("nlptown/bert-base-multilingual-uncased-sentiment")
+from textblob import TextBlob
 
 def analyze_sentiment(text):
-    """Returns sentiment score (1 to 5) for a single review."""
-    tokens = tokenizer.encode(text, return_tensors="pt")
-    result = model(tokens)
-    sentiment_score = int(torch.argmax(result.logits)) + 1
-    return sentiment_score
 
-def get_sentiment_label(avg_score):
+    blob = TextBlob(text)
+    polarity = blob.sentiment.polarity 
 
-    if avg_score >= 4.5:
+    score = int(round(((polarity + 1) / 2) * 9 + 1))
+    return score
+
+def get_sentiment_label(score):
+    """Return a sentiment label based on 1-10 score."""
+    if score >= 9:
         return "Very Positive"
-    elif avg_score >= 3.5:
+    elif score >= 7:
         return "Positive"
-    elif avg_score >= 2.5:
+    elif score >= 4:
         return "Neutral"
-    elif avg_score >= 1.5:
+    elif score >= 2:
         return "Negative"
     else:
         return "Very Negative"

@@ -3,10 +3,10 @@
 A movie review platform built with Django and Bootstrap.
 ## Screenshots
 ### Homepage
-![Homepage](homepage.png)
+![Homepage](homepage.jpg)
 
 ### Movie Detail Page
-![Movie Detail](movie_detail.png)
+![Movie Detail](movie.png)
 
 ## Features
 - User authentication (Signup/Login/Logout)

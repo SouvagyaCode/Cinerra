@@ -25,29 +25,31 @@ def home(request):
     })
 
 def movie_detail(request, movie_id):
-    movie = get_object_or_404(Movie,id = movie_id)
+    movie = get_object_or_404(Movie, id=movie_id)
     reviews = Review.objects.filter(movie=movie)
     comments = Comment.objects.filter(movie=movie).order_by('-created_at')
+    user_review = reviews.filter(user=request.user)
 
-    comments = Comment.objects.filter(movie=movie).order_by('-created_at')
+    review_texts = " ".join([review.review_text for review in reviews if review.review_text])
 
-    user_review = Review.objects.filter(movie=movie, user=request.user)
+    if review_texts.strip():
+        sentiment_score = analyze_sentiment(review_texts)
+        sentiment_label = get_sentiment_label(sentiment_score) 
+        sentiment_label = "No Sentiment"
 
-    avg_rating = Review.objects.filter(movie=movie).aggregate(Avg('rating'))['rating__avg'] or 0 
+    avg_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
 
-    sentiment_label = get_sentiment_label(avg_rating) if avg_rating else "No Sentiment"
+    in_wishlist = Wishlist.objects.filter(user=request.user, movie=movie).exists()
 
-    in_wishlist = Wishlist.objects.filter(user = request.user , movie = movie_id).exists()
-    return render(request, 'movie_detail.html',
-                   {'movie': movie,
-                    'reviews': reviews,
-                    'user_review':user_review,
-                    'comments':comments,
-                    'in_wishlist':in_wishlist ,
-                    'avg_rating':avg_rating,
-                    'sentiment_label':sentiment_label,}
-                    )
-
+    return render(request, 'movie_detail.html', {
+        'movie': movie,
+        'reviews': reviews,
+        'user_review': user_review,
+        'comments': comments,
+        'in_wishlist': in_wishlist,
+        'avg_rating': avg_rating,
+        'sentiment_label': sentiment_label,
+    })
 
 def add_comment(request, movie_id):
     movie = get_object_or_404(Movie, id=movie_id)
@@ -99,3 +101,4 @@ def add_to_wishlist(request, movie_id):
 def wishlist(request):
     wishlists = Wishlist.objects.filter(user=request.user)
     return render (request,'wishlist.html',{'wishlists':wishlists})
+
